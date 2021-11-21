@@ -27,8 +27,9 @@ const stats = catchAsync(async (req, res) => {
 	return res.status(404).json({ status: "failure", message: "URL is not found" });
 });
 
-const redirect = catchAsync(async (req, res) => {
+const redirect = catchAsync(async (req, res, next) => {
 	const { id } = req.params;
+	if (id.length !== 10) return next();
 	const bot = isbot(req.get("user-agent"));
 	const url = await URL.findOne({ id });
 

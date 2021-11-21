@@ -12,7 +12,7 @@ router.post(
 		body("probability").optional().isInt({ min: 0, max: 100 }).withMessage("Probability must be between 0 and 100"),
 		(req, res, next) => {
 			const errors = validationResult(req);
-			if (!errors.isEmpty()) return res.status(400).json({ status: "failure", message: "invalid input" });
+			if (!errors.isEmpty()) return res.status(400).json({ status: "failure", message: errors.array() });
 			return next();
 		},
 	],

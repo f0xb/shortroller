@@ -23,19 +23,19 @@ app.set("strict routing", true);
 app.use(cors());
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 // set up routes and static files. order-sensitive.
-
 app.use("/api/url", urlRouter);
 app.use(redirectRouter);
 
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.resolve(__dirname, "..", "client", "build")));
+	app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "..", "client", "build", "index.html"));
+		res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 	});
 }
 

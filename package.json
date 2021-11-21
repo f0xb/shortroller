@@ -14,10 +14,9 @@
 	"scripts": {
 		"client": "cd client && npm run start",
 		"server": "DEBUG=server:* npx nodemon -r dotenv/config src/index.js dotenv_config_path=.development.env",
-		"dev": "npm run server && npm run client",
 		"start": "node -r dotenv/config src/index.js dotenv_config_path=.production.env",
 		"build": "cd client && npm install && npm run build",
-		"local-prod": "npm build && npm start",
+		"local-prod": "npm run build && npm start",
 		"heroku-postbuild": "cd client && npm install && npm run build"
 	},
 	"dependencies": {
