@@ -1,0 +1,37 @@
+@media only screen and (min-width: 600px) {
+  .url-input {
+    width: 600px !important;
+  }
+}
+
+.probability {
+  border: none;
+  border-bottom: 1px dotted #fff;
+  cursor: pointer;
+  color: white;
+  margin-left: 5px;
+  background-color: #212529;
+  text-align: center;
+}
+
+.url-input {
+  width: 100%;
+}
+
+.probability:focus {
+  border-bottom: none;
+  margin-left: 5px;
+  border: 2 solid #fff;
+}
+
+.center {
+  align-self: center;
+  margin: 0 auto;
+}
+
+.ui.modal,
+.ui.modal .content,
+.ui.modal .header {
+  background-color: #166b43 !important;
+  font-size: large;
+}

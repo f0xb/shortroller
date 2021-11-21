@@ -1,0 +1,31 @@
+@media only screen and (max-width: 700px) {
+  .header-menu {
+    margin-top: 2% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+  }
+  .header-menu > .item {
+    align-self: center;
+    border-radius: unset !important;
+  }
+}
+
+.header-menu a {
+  color: grey;
+  font-weight: bolder;
+}
+
+/* .active a {
+  color: white;
+  font-size: large;
+  border-bottom: 5px solid #fff;
+  padding-bottom: 4px;
+}
+
+.header-menu a:hover :not(.active) {
+  color: blue;
+} */
