@@ -1,0 +1,54 @@
+{
+	"name": "shortroller",
+	"version": "0.0.1",
+	"description": "URL shortener that randomly redirects links to other sites with a given probability.",
+	"author": "fady",
+	"license": "Unlicense",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": ">=14.17",
+		"npm": ">=7.23.0"
+	},
+	"main": "src/index.js",
+	"scripts": {
+		"client": "cd client && npm run start",
+		"server:dev": "DEBUG=server:* npx nodemon -r dotenv/config src/index.js dotenv_config_path=.development.env",
+		"start": "node -r dotenv/config src/index.js dotenv_config_path=.production.env",
+		"build": "cd client && npm install && npm run build",
+		"heroku-postbuild": "cd client && npm install && npm run build"
+	},
+	"dependencies": {
+		"@godaddy/terminus": "^4.9.0",
+		"bcrypt": "^5.0.1",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
+		"debug": "^4.3.2",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"express-validator": "^6.13.0",
+		"helmet": "^4.6.0",
+		"http-errors": "^1.8.0",
+		"http-status": "^1.5.0",
+		"isbot": "^3.3.4",
+		"joi": "^17.4.2",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^6.0.5",
+		"morgan": "^1.10.0",
+		"nanoid": "^3.1.30",
+		"open-graph-scraper": "^4.11.0",
+		"rate-limiter-flexible": "^2.2.4"
+	},
+	"devDependencies": {
+		"eslint": "^7.32.0",
+		"eslint-config-airbnb-base": "^14.2.1",
+		"eslint-config-node": "^4.1.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-import": "^2.24.2",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-security": "^1.4.0",
+		"nodemon": "^2.0.12",
+		"prettier": "^2.4.1"
+	}
+}
