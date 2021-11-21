@@ -1,22 +1,26 @@
 @media only screen and (max-width: 700px) {
-  .header-menu {
-    margin-top: 2% !important;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: column;
-    align-content: center;
-    justify-items: center;
-  }
-  .header-menu > .item {
-    align-self: center;
-    border-radius: unset !important;
-  }
+	.header-menu {
+		margin-top: 2% !important;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+		align-content: center;
+		justify-items: center;
+	}
+	.header-menu > .item {
+		align-self: center;
+		border-radius: unset !important;
+	}
+}
+
+.header-menu {
+	margin: 2% !important;
 }
 
 .header-menu a {
-  color: grey;
-  font-weight: bolder;
+	color: grey;
+	font-weight: bolder;
 }
 
 /* .active a {
