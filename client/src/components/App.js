@@ -8,7 +8,6 @@ import Footer from "./Footer";
 import Generate from "./Generate";
 import Stats from "./Stats";
 import About from "./About";
-import Report from "./Report";
 import "./App.css";
 import NotFound from "./NotFount";
 
@@ -24,7 +23,6 @@ const App = () => {
 							<Route path="/" exact component={Generate} />
 							<Route path="/stats/:id?" component={Stats} />
 							<Route path="/about" exact component={About} />
-							<Route path="/report" exact component={Report} />
 							<Route path="/notfound" component={NotFound} />
 							<Redirect to="/notfound" />
 						</Switch>

@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 import redirectRouter from "./routes/redirect.js";
 import urlRouter from "./routes/url.js";
+import statsRouter from "./routes/stats.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +30,7 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 // set up routes and static files. order-sensitive.
 app.use("/api/url", urlRouter);
+app.use("/api/stats", statsRouter);
 app.use(redirectRouter);
 
 if (process.env.NODE_ENV === "production") {
