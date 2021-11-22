@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Form, Grid, Input, Header, Segment, Dimmer, Loader, Button, Icon } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router";
+import { Form, Grid, Input, Header, Segment, Loader, Button } from "semantic-ui-react";
+import toast from "react-hot-toast";
 
 import { BASE_URL } from "../constants";
 
@@ -8,19 +10,31 @@ import API from "../api/url";
 import "./Generate.css";
 
 const Stats = () => {
-	const [id, setId] = useState("");
+	const { id } = useParams();
+	const history = useHistory();
+	const [input, setInput] = useState("");
 	const [stats, setStats] = useState(null);
 	const [state, setState] = useState("idle");
 
-	const handleSubmit = async () => {
+	const fetchStats = async (urlId) => {
 		setState("loading");
 		try {
-			const response = await API.get(`/url/stats/${id}`);
+			const response = await API.get(`/url/stats/${urlId}`);
 			setStats(response.data.data);
 			setState("stats");
 		} catch (error) {
 			setState("error");
 		}
+	};
+
+	useEffect(() => {
+		if (id) fetchStats(id);
+	}, [id]);
+
+	const handleSubmit = () => {
+		const inputId = input.includes(BASE_URL) ? input.split("/").pop() : input;
+		if (inputId && inputId.match(/^[A-Za-z0-9]+$/i) && inputId.length === 10) history.push(`/stats/${inputId}`);
+		else toast.error("Please enter a valid URL or ID to get its stats");
 	};
 
 	const viewInput = () => {
@@ -35,15 +49,15 @@ const Stats = () => {
 					</Header>
 					<Grid.Row>
 						<div className="url-input">
-							<Form name="form" onSubmit={() => handleSubmit()}>
+							<Form name="form" onSubmit={handleSubmit}>
 								<Input
 									fluid
 									autoCapitalize="none"
 									type="text"
-									value={id}
+									value={input}
 									name="id"
-									onChange={(e) => setId(e.target.value)}
-									label={`${BASE_URL}/`}
+									onChange={(e) => setInput(e.target.value)}
+									label={`https://${BASE_URL}/`}
 									placeholder="shortened URL or ID..."
 									action={{
 										color: "blue",
@@ -103,7 +117,16 @@ const Stats = () => {
 		);
 	};
 
-	return viewStats();
+	switch (state) {
+		case "error":
+			return viewError();
+		case "loading":
+			return viewLoading();
+		case "stats":
+			return viewStats();
+		default:
+			return viewInput();
+	}
 };
 
 export default Stats;

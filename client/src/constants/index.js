@@ -1,1 +1,1 @@
-export const BASE_URL = "https://shortroller.herokuapp.com";
+export const BASE_URL = "shortroller.herokuapp.com";
