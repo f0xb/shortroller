@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
-import cookieParser from "cookie-parser";
+import Cookies from "cookies";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -34,8 +34,13 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
+
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
+app.use(Cookies.express([process.env.COOKIE_SECRET]));
+
+if (process.env.NODE_ENV === "production") {
+	app.set("trust proxy", 1);
+}
 
 // set up routes and static files. order-sensitive.
 app.use("/api/url", urlRouter);

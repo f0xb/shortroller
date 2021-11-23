@@ -7,14 +7,19 @@ import catchAsync from "../middleware/catchAsyncErrors.js";
 import ogtagstemplate from "../lib/ogtagstemplate.js";
 import randomLink from "../lib/randomLink.js";
 
-const MAX_TROLLS_PER_LINK = 3;
+const MAX_TROLLS_PER_LINK = 5;
 
 const shorten = catchAsync(async (req, res) => {
 	let id = nanoid();
 	// eslint-disable-next-line security/detect-non-literal-fs-filename, no-await-in-loop
 	while (await URL.exists({ id })) id = nanoid();
 	const { url, probability } = req.body;
-	const tags = (await ogs({ url })).result;
+	let tags;
+	try {
+		tags = (await ogs({ url })).result;
+	} catch (error) {
+		tags = {};
+	}
 	const dto = { url, probability, id, tags };
 	const shortenedURL = await URL.create(dto);
 	return res.status(201).json({ status: "success", data: shortenedURL });
@@ -30,24 +35,22 @@ const stats = catchAsync(async (req, res) => {
 const redirect = catchAsync(async (req, res, next) => {
 	const { id } = req.params;
 	if (id.length !== 10) return next();
-	const bot = isbot(req.get("user-agent"));
 	const url = await URL.findOne({ id });
-
 	if (!url) return res.status(404).redirect("/notfound");
-	if (bot) return res.send(ogtagstemplate(url.tags));
+	if (isbot(req.get("user-agent"))) return res.send(ogtagstemplate(url.tags));
 
-	const { cookies } = req;
-	const reachedMaxTrolls = cookies && parseInt(cookies.trolled, 10) <= MAX_TROLLS_PER_LINK;
-	const troll = Math.floor(Math.random() * 101) <= url.probability;
+	const trolled = parseInt(req.cookies.get("trolled"), 10) || 0;
+	const reachedMaxTrolls = trolled >= MAX_TROLLS_PER_LINK;
+	const willTroll = Math.floor(Math.random() * 101) <= url.probability;
 
 	await URL.findOneAndUpdate(
 		{ id },
-		{ $inc: { "stats.hits": 1, ...(() => (troll ? { "stats.trolls": 1 } : null))() } },
+		{ $inc: { "stats.hits": 1, ...(() => (willTroll && !reachedMaxTrolls ? { "stats.trolls": 1 } : null))() } },
 	);
 
-	if (reachedMaxTrolls || !troll) return res.redirect(url.url);
-	const trollsCount = cookies.trolled ? cookies.trolled + 1 : 1;
-	res.cookie("trolled", trollsCount, { maxAge: 30 * 24 * 60 * 60 * 1000, path: `/${id}` });
+	if (reachedMaxTrolls || !willTroll) return res.redirect(url.url);
+
+	res.cookies.set("trolled", trolled + 1, { maxAge: 30 * 24 * 60 * 60 * 1000, path: `/${id}`, overwrite: true });
 	return res.redirect(randomLink());
 });
 
