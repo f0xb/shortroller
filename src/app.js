@@ -22,6 +22,16 @@ app.set("case sensitive routing", false);
 app.set("strict routing", true);
 
 app.use(cors());
+app.use(
+	helmet({
+		contentSecurityPolicy: {
+			directives: {
+				...helmet.contentSecurityPolicy.getDefaultDirectives(),
+				"script-src": ["'self'", "'unsafe-inline'"],
+			},
+		},
+	}),
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
