@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Segment, Input } from "semantic-ui-react";
+import { Segment, Input, Header } from "semantic-ui-react";
 import toast from "react-hot-toast";
 import copy from "copy-to-clipboard";
 
@@ -13,7 +13,9 @@ const LinkCard = (props) => {
 
 	return (
 		<Segment>
-			<p>{url.url}</p>
+			<Header size="tiny" inverted as="a">
+				Truthful link: <a href={url.url}>{url.url}</a>
+			</Header>
 			<Input
 				className="url-field"
 				fluid

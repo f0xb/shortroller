@@ -8,6 +8,7 @@ import { shorten } from "../actions";
 
 import "./Generate.css";
 import SuccessCard from "./SuccessCard";
+import { BASE_URL } from "../constants";
 
 const Generate = () => {
 	const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Generate = () => {
 	}, [state.success]);
 
 	const handleSubmit = async () => {
+		if (url.includes(BASE_URL)) return toast.error("Invalid domain name.");
 		if (isURL(url)) {
 			if (!url.startsWith("http") && !url.includes("://")) setUrl("https://" + url);
 			setIsValidUrl(isURL(url));
