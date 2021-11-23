@@ -10,11 +10,10 @@ export const shorten = (data) => async (dispatch) => {
 			});
 		})
 		.catch((error) => {
-			const errorMessage = error?.response?.data?.message;
 			dispatch({
 				type: "SHORTEN_URL_FAIL",
 				payload: {
-					error: errorMessage || "Could not shorten url for unexpected error",
+					error: "Could not shorten url for unexpected error",
 				},
 			});
 		});

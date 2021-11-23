@@ -1,15 +1,12 @@
 import React from "react";
-import { Grid, Header, Segment, Input } from "semantic-ui-react";
-import toast from "react-hot-toast";
-import copy from "copy-to-clipboard";
-
+import { Grid, Header } from "semantic-ui-react";
 import "./SuccessCard.css";
-import { Link } from "react-router-dom";
 
-import { BASE_URL } from "../constants";
+import LinkCard from "./LinkCard";
 
 const SuccessCard = (props) => {
-	const { url } = props; // server response
+	const { url } = props;
+
 	return (
 		<Grid stretched>
 			<Grid.Row centered verticalAlign="middle">
@@ -26,29 +23,7 @@ const SuccessCard = (props) => {
 
 			<Grid.Row>
 				<Grid.Column textAlign="center">
-					<Segment>
-						<p>{url.url}</p>
-						<Input
-							className="url-field"
-							fluid
-							type="text"
-							disabled
-							value={`${url.id}`}
-							name="url"
-							action={{
-								color: "blue",
-								icon: "copy",
-								content: "Copy Link",
-								onClick: () => {
-									copy(`${BASE_URL}/${url.id}`);
-									toast.success("URL copied to clipboard");
-								},
-							}}
-						/>
-						<p className="success-card-subtitle">
-							{url.probability}% probability •<Link to={`/stats/${url.id}`}> view stats</Link>
-						</p>
-					</Segment>
+					<LinkCard url={url} />
 				</Grid.Column>
 			</Grid.Row>
 		</Grid>

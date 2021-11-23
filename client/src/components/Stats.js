@@ -7,7 +7,9 @@ import { BASE_URL } from "../constants";
 
 import API from "../api/url";
 
-import "./Generate.css";
+import "./Stats.css";
+
+import LinkCard from "./LinkCard";
 
 const Stats = () => {
 	const { id } = useParams();
@@ -47,17 +49,18 @@ const Stats = () => {
 					<Header size="medium" textAlign="center" inverted>
 						See statistics about your generated shortened links.
 					</Header>
-					<Grid.Row>
+					<Grid.Row className="url-input">
 						<div className="url-input">
 							<Form name="form" onSubmit={handleSubmit}>
 								<Input
+									className="stats-input"
 									fluid
 									autoCapitalize="none"
 									type="text"
 									value={input}
 									name="id"
 									onChange={(e) => setInput(e.target.value)}
-									label={`https://${BASE_URL}/`}
+									label={"Shortened Link or ID"}
 									placeholder="shortened URL or ID..."
 									action={{
 										color: "blue",
@@ -96,7 +99,7 @@ const Stats = () => {
 					<Header size="medium" textAlign="center" inverted>
 						Invalid URL supplied.
 					</Header>
-					<Button content="Primary" primary>
+					<Button content="Primary" primary onClick={() => history.push("/stats")}>
 						Try Again
 					</Button>
 				</Grid.Row>
@@ -106,12 +109,31 @@ const Stats = () => {
 
 	const viewStats = () => {
 		console.log("stats===>", stats);
+		// todo: view stats ui
 		return (
-			<Grid stretched>
+			<Grid>
 				<Grid.Row centered verticalAlign="middle">
 					<Header size="huge" textAlign="center" inverted>
-						<span>STATS.</span>
+						Link Statistics
 					</Header>
+					<Header.Subheader>See information about your generated link!</Header.Subheader>
+				</Grid.Row>
+				<Grid.Row stretched verticalAlign="middle" columns="2" textAlign="center">
+					<Grid.Column floated="left">
+						<Segment inverted color="blue">
+							<Header size="medium">Total Hits</Header>
+							<p>{stats.stats.hits}</p>
+						</Segment>
+					</Grid.Column>
+					<Grid.Column floated="right">
+						<Segment inverted color="green">
+							<Header size="medium">Total Trolls</Header>
+							<p>{stats.stats.trolls}</p>
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+				<Grid.Row stretched centered columns="1">
+					<LinkCard url={stats} />
 				</Grid.Row>
 			</Grid>
 		);

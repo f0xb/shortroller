@@ -1,0 +1,18 @@
+@media only screen and (max-width: 700px) {
+	.stats-input .label {
+		display: none !important;
+	}
+	input[type="text"] {
+		border-radius: 0.28571429rem 0 0 0.28571429rem !important;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.url-input {
+		width: 700px !important;
+	}
+}
+
+.url-input {
+	width: 100%;
+}

@@ -1,15 +1,10 @@
 .success-subtitles p {
-  font-size: large;
-  padding: 0px;
-  margin: 0px;
-}
-
-.url-field,
-.url-field > * {
-  opacity: unset !important;
+	font-size: large;
+	padding: 0px;
+	margin: 0px;
 }
 
 .success-card-subtitle a {
-  color: white;
-  text-decoration-line: underline;
+	color: white;
+	text-decoration-line: underline;
 }
