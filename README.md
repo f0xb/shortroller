@@ -3,7 +3,7 @@
 
 A URL shortener that can redirect the users _randomly_ to funny links instead of the intended ones based on a given probability.
 
-###### Live Deployment: https://shortroller.herokuapp.com
+### Live Deployment: https://shortroller.herokuapp.com
 ---
 
 ### What does it do?
@@ -20,3 +20,20 @@ A URL shortener that can redirect the users _randomly_ to funny links instead of
 - Users share with friends the shortened URL, they can be trolled based on the specified probability
 - If the shortened link is shared on social media or inside a messaging app, the server will not redirect, it will detect that and respond with the true URL's opengraph metadata
 
+### Technology
+#### Backend
+- NodeJS
+- ExpressJS
+- MongoDB
+- express-validator
+- nanoid
+- open-graph-scraper
+
+#### Frontend
+- ReactJS
+- Redux
+- React Router
+- Axios
+
+### Todo List
+- [ ] Guard backend API endpoints from spamming by rate-limiting requests based on IP
