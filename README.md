@@ -37,3 +37,6 @@ A URL shortener that can redirect the users _randomly_ to funny links instead of
 
 ### Todo List
 - [ ] Guard backend API endpoints from spamming by rate-limiting requests based on IP
+
+### Acknowledgement
+This cool idea is a direct clone of the closed-source rroll.to. I attempted to recreate it only to practice web developement.
